@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ThatStellarisGuy | The Atlan Dominion</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Cinzel', 'serif'],
+                    },
+                    colors: {
+                        brand: {
+                            gold: '#FFD700',
+                            goldglow: 'rgba(255, 215, 0, 0.5)',
+                            dark: '#0B0C10',
+                            panel: '#1F2833',
+                            accent: '#C5C6C7',
+                            blood: '#8B0000'
+                        }
+                    },
+                    backgroundImage: {
+                        'hero-pattern': "url('data:image/svg+xml,%3Csvg width=\\'20\\' height=\\'20\\' viewBox=\\'0 0 20 20\\' xmlns=\\'http://www.w3.org/2000/svg\\'%3E%3Cg fill=\\'%231F2833\\' fill-opacity=\\'0.4\\' fill-rule=\\'evenodd\\'%3E%3Ccircle cx=\\'3\\' cy=\\'3\\' r=\\'3\\'/%3E%3Ccircle cx=\\'13\\' cy=\\'13\\' r=\\'3\\'/%3E%3C/g%3E%3C/svg%3E')",
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #0B0C10;
+            color: #C5C6C7;
+        }
+        .text-glow {
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+        }
+        .box-glow {
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.15);
+        }
+        .border-gradient {
+            border-image: linear-gradient(to bottom right, #FFD700, #8B0000) 1;
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0B0C10; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1F2833; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #FFD700; 
+        }
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .drop-cap::first-letter {
+            float: left;
+            font-size: 4rem;
+            line-height: 3.5rem;
+            padding-right: 0.5rem;
+            padding-top: 0.5rem;
+            font-family: 'Cinzel', serif;
+            color: #FFD700;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-brand-gold selection:text-brand-dark flex flex-col min-h-screen">
+
+    <nav class="fixed w-full z-50 bg-brand-dark/90 backdrop-blur-md border-b border-brand-panel">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex items-center gap-3 cursor-pointer">
+                    <i class="fa-solid fa-satellite-dish text-brand-gold text-2xl"></i>
+                    <span class="font-serif font-bold text-2xl text-white tracking-wider">ThatStellarisGuy</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#lore" class="text-sm font-medium hover:text-brand-gold transition-colors uppercase tracking-widest">Lore</a>
+                    <a href="#build" class="text-sm font-medium hover:text-brand-gold transition-colors uppercase tracking-widest">The Build</a>
+                    <a href="#strategy" class="text-sm font-medium hover:text-brand-gold transition-colors uppercase tracking-widest">Strategy</a>
+                    <a href="#variants" class="text-sm font-medium hover:text-brand-gold transition-colors uppercase tracking-widest">Variants</a>
+                </div>
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-gray-300 hover:text-white focus:outline-none">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-brand-panel border-b border-brand-gold/20">
+            <a href="#lore" class="block px-4 py-3 text-sm font-medium hover:bg-brand-dark hover:text-brand-gold border-b border-brand-dark/50">Lore</a>
+            <a href="#build" class="block px-4 py-3 text-sm font-medium hover:bg-brand-dark hover:text-brand-gold border-b border-brand-dark/50">The Build</a>
+            <a href="#strategy" class="block px-4 py-3 text-sm font-medium hover:bg-brand-dark hover:text-brand-gold border-b border-brand-dark/50">Strategy</a>
+            <a href="#variants" class="block px-4 py-3 text-sm font-medium hover:bg-brand-dark hover:text-brand-gold">Variants</a>
+        </div>
+    </nav>
+
+    <header class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden bg-brand-dark min-h-[90vh] flex items-center">
+        <!-- Sun background effect -->
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-brand-gold opacity-10 rounded-full blur-[150px] pointer-events-none"></div>
+        <div class="absolute -top-40 left-1/2 -translate-x-1/2 w-[400px] h-[400px] bg-white opacity-20 rounded-full blur-[100px] pointer-events-none"></div>
+        <div class="absolute inset-0 bg-hero-pattern pointer-events-none"></div>
+
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10 fade-in">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-panel border border-brand-gold/30 text-brand-gold text-sm font-bold uppercase tracking-widest mb-8 box-glow">
+                <i class="fa-solid fa-sun"></i> Spiritualist Authoritarian Build
+            </div>
+            <h1 class="text-5xl md:text-7xl lg:text-8xl font-serif font-black text-white mb-6 uppercase tracking-tight text-glow">
+                The Atlan <span class="text-brand-gold">Dominion</span>
+            </h1>
+            <p class="text-xl md:text-2xl text-gray-300 font-light mb-10 max-w-3xl mx-auto italic font-serif">
+                "Sun-Crowned Pride of Primane"
+            </p>
+            <p class="text-lg text-brand-accent max-w-2xl mx-auto mb-12 leading-relaxed">
+                A spiritualist authoritarian lion-pride monarchy built around unity, ruler power, priesthood, psionic ascension, and later imperial divinity. Solid single-player viability, and a clean path from "holy regency" to "divine star empire."
+            </p>
+            
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="#build" class="px-8 py-4 bg-brand-gold text-brand-dark font-bold rounded hover:bg-yellow-400 transition-all transform hover:scale-105 shadow-[0_0_20px_rgba(255,215,0,0.4)]">
+                    <i class="fa-solid fa-rocket mr-2"></i> View Build Specs
+                </a>
+                <a href="#lore" class="px-8 py-4 bg-brand-panel text-white font-bold rounded border border-brand-gold/50 hover:bg-brand-dark hover:border-brand-gold transition-all">
+                    <i class="fa-solid fa-book-journal-whills mr-2"></i> Read the Archives
+                </a>
+            </div>
+        </div>
+        
+        <!-- Decorative bottom gradient -->
+        <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-brand-dark to-transparent"></div>
+    </header>
+
+    <section id="lore" class="py-24 bg-brand-dark relative border-t border-brand-panel">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-3xl md:text-5xl font-serif font-bold text-white mb-4">The Archives of Arla</h2>
+                <div class="h-1 w-24 bg-brand-gold mx-auto rounded"></div>
+            </div>
+
+            <div class="bg-brand-panel/50 border border-brand-gold/20 p-6 md:p-12 rounded-xl shadow-2xl fade-in prose prose-invert prose-lg max-w-none text-brand-accent font-light leading-relaxed relative">
+                
+                <!-- Stylistic watermark -->
+                <i class="fa-solid fa-sun absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[20rem] text-brand-gold/5 pointer-events-none"></i>
+
+                <p class="drop-cap">
+                    There are worlds on which the dawn brings comfort, worlds where the first light of a star is a promise of warmth, harvest, and another day spared from the cold of the void. Arla is not one of those worlds. Under the fierce white‑gold blaze of Primane, the dawn was a judgment. It rose on prides that starved beneath overflowing granaries, on temples that gleamed while frontier cities burned, and on a people taught that suffering was the surest proof of faith. Out of that contradiction, out of hunger, incense, blood, and sunlight, there arose a power that would reach beyond its savannah skies and carve its creed into the darkness between stars. It is known as the Atlan Dominion.
+                </p>
+                <p>
+                    To its adherents, the Dominion is Primane made manifest in law and steel: a disciplined theocracy that ended an age of holy civil war and united the prides of Atlan under one throne and one god. To its enemies, it is an empire forged in purges and sacrilege, led by a messiah who sanctified terror and called it truth. It is a dominion in every sense of the word—over territory, over doctrine, over memory itself—ruled by <strong>Ti'Jann, Solarch of the True Dawn, Voice‑Claw of Primane</strong>, the first and greatest Atlan of this new order.
+                </p>
+
+                <h3 class="text-2xl font-serif text-brand-gold mt-10 mb-4 border-b border-brand-gold/20 pb-2">The Seven Houses</h3>
+                <p>
+                    Long before the Dominion turned its gaze to the stars, Arla was divided among the Seven Houses of Primane, priest‑noble dynasties that traced their bloodlines back to the first prophets who saw divinity in the face of their sun. Each House claimed stewardship over a fragment of Primane's will: Aur‑Vakhar for kingship, Solmara for flame, Jhir‑Kadan for war, Veloth for memory, Marrakai for harvest, Othrys for law, and Cael‑Ruun for sacrifice.
+                </p>
+                <p>
+                    Beneath the Heliarchic Plateau lay its shadow: the Tithe Warrens. There, in vast subterranean cities of stone and brass, laborers, scribes, shrine‑workers and debt‑bound families processed the offerings of the faithful. Every citizen gave something, and very few ever saw where it went. Over generations, the tithes drifted. Less to aqueducts and observatories; more to gilded domes, auric glass balconies, and private feasts held in years the frontier recorded as drought.
+                </p>
+
+                <h3 class="text-2xl font-serif text-brand-gold mt-10 mb-4 border-b border-brand-gold/20 pb-2">The Rise of Ti'Jann</h3>
+                <p>
+                    Ti'Jann was never meant to break this system. Born into a lesser branch of House Cael‑Ruun, his faith did not shatter in the tithe warrens; it shifted. Where others saw a sacred machine, he saw a betrayal. His first miracle was not fire from the sky but refusal. During the Forty‑Third Tithe of Ash, he stood beneath the ledger‑sun, cut his palm, and pressed his own blood to the tithe seal, declaring that Primane did not hunger for the bones of his children, but for truth.
+                </p>
+                <p>
+                    Sentenced to ritual blinding beneath the dawn‑mirror, he stared into the concentrated dawn without his eyes burning, reciting sealed scriptures naming the corruption of the Seven Houses. In seven days, the condemned Eclesiarch became a living prophecy. In seven months, a warlord. In seven years, he ended the age that had birthed him at the Crown of Noon, supplanting the order that had sustained the Houses for centuries.
+                </p>
+
+                <h3 class="text-2xl font-serif text-brand-gold mt-10 mb-4 border-b border-brand-gold/20 pb-2">The Solar Crusade</h3>
+                <p>
+                    So ended the Endless Crusades—and so began the Solar Crusade. Arla had bled itself for centuries without leaving its own sky; now, the Dominion would carry Primane's light outward in one continuous surge. The war, Ti'Jann promised, would not end until there was nothing left that needed illumination.
+                </p>
+                <p>
+                    In its dealings with alien civilizations, the Dominion seeks recognition. Recognition that Primane's light is real, that Ti'Jann bears its mandate, and that the galaxy is filled with shadows a single world could never survive alone. As the Atlan say: <em>"By mane, by claw, by crown, by Primane."</em>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section id="build" class="py-24 bg-[#111218] relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-3xl md:text-5xl font-serif font-bold text-white mb-4">Dominion Parameters</h2>
+                <p class="text-brand-accent max-w-2xl mx-auto">The core empire setup for starting your campaign.</p>
+                <div class="h-1 w-24 bg-brand-gold mx-auto rounded mt-6"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Card: Empire Details -->
+                <div class="bg-brand-panel rounded-xl p-6 border-t-4 border-brand-gold hover:-translate-y-2 transition-transform duration-300 shadow-lg fade-in">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-12 h-12 rounded-full bg-brand-dark flex items-center justify-center text-brand-gold text-xl">
+                            <i class="fa-solid fa-globe"></i>
+                        </div>
+                        <h3 class="text-xl font-serif font-bold text-white">Empire Core</h3>
+                    </div>
+                    <ul class="space-y-3 text-sm">
+                        <li class="flex justify-between border-b border-gray-700 pb-2">
+                            <span class="text-gray-400">Empire Name</span>
+                            <span class="font-bold text-white">The Atlan Dominion</span>
+                        </li>
+                        <li class="flex justify-between border-b border-gray-700 pb-2">
+                            <span class="text-gray-400">Adjective</span>
+                            <span class="font-bold text-white">Atlan</span>
+                        </li>
+                        <li class="flex justify-between border-b border-gray-700 pb-2">
+                            <span class="text-gray-400">Ship Prefix</span>
+                            <span class="font-bold text-white">ADS</span>
+                        </li>
+                        <li class="flex justify-between border-b border-gray-700 pb-2">
+                            <span class="text-gray-400">Homeworld</span>
+                            <span class="font-bold text-brand-gold">Atlan Prime (Savannah)</span>
+                        </li>
+                        <li class="flex justify-between border-b border-gray-700 pb-2">
+                            <span class="text-gray-400">Star System</span>
+                            <span class="font-bold text-white">Primane</span>
+                        </li>
+                        <li class="flex justify-between border-b border-gray-700 pb-2">
+                            <span class="text-gray-400">Capital City</span>
+                            <span class="font-bold text-white">Sol-Roar Citadel</span>
+                        </li>
+                        <li class="flex justify-between pb-2">
+                            <span class="text-gray-400">Ruler Title</span>
+                            <span class="font-bold text-white text-right">Solar Regent<br><span class="text-xs text-brand-gold">(Later: Sun-Emperor/Empress)</span></span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Card: Species -->
+                <div class="bg-brand-panel rounded-xl p-6 border-t-4 border-orange-500 hover:-translate-y-2 transition-transform duration-300 shadow-lg fade-in">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-12 h-12 rounded-full bg-brand-dark flex items-center justify-center text-orange-500 text-xl">
+                            <i class="fa-solid fa-cat"></i>
+                        </div>
+                        <h3 class="text-xl font-serif font-bold text-white">Species: Atlan</h3>
+                    </div>
+                    <p class="text-sm text-gray-400 mb-4">Portrait: Mammalian lion/cat. The Atlan are a proud warrior-priest species: physically imposing but difficult to administrate at scale.</p>
+                    <div class="space-y-2">
+                        <div class="bg-brand-dark p-3 rounded flex items-center gap-3">
+                            <i class="fa-solid fa-plus-circle text-green-500"></i>
+                            <span class="font-bold text-white">Traditional</span>
+                        </div>
+                        <div class="bg-brand-dark p-3 rounded flex items-center gap-3">
+                            <i class="fa-solid fa-plus-circle text-green-500"></i>
+                            <span class="font-bold text-white">Charismatic</span>
+                        </div>
+                        <div class="bg-brand-dark p-3 rounded flex items-center gap-3">
+                            <i class="fa-solid fa-plus-circle text-green-500"></i>
+                            <span class="font-bold text-white">Strong</span>
+                        </div>
+                        <div class="bg-brand-dark p-3 rounded flex items-center gap-3 border border-red-900/50">
+                            <i class="fa-solid fa-minus-circle text-red-500"></i>
+                            <span class="font-bold text-white">Unruly</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card: Government -->
+                <div class="bg-brand-panel rounded-xl p-6 border-t-4 border-purple-500 hover:-translate-y-2 transition-transform duration-300 shadow-lg fade-in">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-12 h-12 rounded-full bg-brand-dark flex items-center justify-center text-purple-500 text-xl">
+                            <i class="fa-solid fa-scale-balanced"></i>
+                        </div>
+                        <h3 class="text-xl font-serif font-bold text-white">Government</h3>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <span class="text-xs text-gray-400 uppercase font-bold tracking-wider block mb-2">Ethics</span>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-teal-900/40 text-teal-400 rounded-full text-sm font-semibold border border-teal-800"><i class="fa-solid fa-pray mr-1"></i> Fanatic Spiritualist</span>
+                            <span class="px-3 py-1 bg-green-900/40 text-green-400 rounded-full text-sm font-semibold border border-green-800"><i class="fa-solid fa-crown mr-1"></i> Authoritarian</span>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <span class="text-xs text-gray-400 uppercase font-bold tracking-wider block mb-2">Authority & Origin</span>
+                        <div class="space-y-2">
+                            <div class="bg-brand-dark p-2 rounded text-sm text-white"><i class="fa-solid fa-gavel text-gray-500 w-5"></i> Dictatorial <span class="text-xs text-gray-400">(Start)</span></div>
+                            <div class="bg-brand-dark p-2 rounded text-sm font-bold text-brand-gold border border-brand-gold/30"><i class="fa-solid fa-star text-brand-gold w-5"></i> Under One Rule</div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <span class="text-xs text-gray-400 uppercase font-bold tracking-wider block mb-2">Starting Civics</span>
+                        <div class="space-y-2">
+                            <div class="bg-brand-dark p-2 rounded text-sm text-white"><i class="fa-solid fa-hands-praying text-blue-400 w-5"></i> Exalted Priesthood</div>
+                            <div class="bg-brand-dark p-2 rounded text-sm text-white"><i class="fa-solid fa-chess-king text-purple-400 w-5"></i> Philosopher King</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-8 bg-blue-900/20 border border-blue-800 rounded-lg p-5 flex items-start gap-4 fade-in">
+                <i class="fa-solid fa-circle-info text-blue-400 text-xl mt-1"></i>
+                <div>
+                    <h4 class="text-blue-400 font-bold mb-1">Builder's Note: The Imperial Cult Transition</h4>
+                    <p class="text-sm text-blue-200/80">You cannot start <em>Under One Rule</em> + <em>Imperial Cult</em> because the origin forces Dictatorial authority initially. After about 40 years, the origin's storyline allows a shift to Imperial authority. Once that happens, reform your government to take <strong>Imperial Cult</strong> (replacing Exalted Priesthood if needed) to complete your divine dynasty roleplay!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="strategy" class="py-24 bg-brand-dark relative border-t border-brand-panel">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-3xl md:text-5xl font-serif font-bold text-white mb-4">Grand Strategy Guide</h2>
+                <div class="h-1 w-24 bg-brand-gold mx-auto rounded"></div>
+            </div>
+
+            <div class="relative border-l-2 border-brand-gold/30 ml-4 md:ml-0 md:pl-0">
+                
+                <!-- Phase 1 -->
+                <div class="mb-12 relative pl-8 md:pl-0 fade-in">
+                    <div class="absolute w-4 h-4 bg-brand-gold rounded-full -left-[9px] md:left-1/2 md:-ml-[8px] top-1 shadow-[0_0_10px_#FFD700]"></div>
+                    <div class="md:w-1/2 md:pr-12 md:ml-0 md:text-right">
+                        <div class="text-brand-gold font-bold text-sm tracking-widest mb-1">YEARS 0 - 10</div>
+                        <h3 class="text-2xl font-serif font-bold text-white mb-3">Expansion & Discovery</h3>
+                        <div class="bg-brand-panel p-5 rounded-lg border border-gray-800 shadow-md">
+                            <p class="text-gray-300 text-sm leading-relaxed mb-3">Expand toward chokepoints, build a second science ship early, and claim high-value systems. Prioritize minerals, energy, and consumer goods to support extra researchers and priests.</p>
+                            <p class="text-brand-accent text-sm italic border-l-2 border-brand-gold/50 pl-3 text-left">Do not overbuild Temples at the expense of alloys; the Dominion's holy aura means little if a neighbor rushes corvettes.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phase 2 -->
+                <div class="mb-12 relative pl-8 md:pl-0 fade-in">
+                    <div class="absolute w-4 h-4 bg-brand-gold rounded-full -left-[9px] md:left-1/2 md:-ml-[8px] top-1 shadow-[0_0_10px_#FFD700]"></div>
+                    <div class="md:w-1/2 md:pl-12 md:ml-auto">
+                        <div class="text-brand-gold font-bold text-sm tracking-widest mb-1">YEARS 10 - 30</div>
+                        <h3 class="text-2xl font-serif font-bold text-white mb-3">The Pride Ascendant</h3>
+                        <div class="bg-brand-panel p-5 rounded-lg border border-gray-800 shadow-md">
+                            <p class="text-gray-300 text-sm leading-relaxed">Build the Atlan identity around three pillars: temples, chokepoints, and fleet deterrence. Keep one fleet near capital. Aim for a stable alloy base, 3–5 colonies, upgraded border starbases, and a clear path toward Psionic tech. Subjugate weak neighbors as lesser prides beneath Primane's light.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phase 3 -->
+                <div class="mb-12 relative pl-8 md:pl-0 fade-in">
+                    <div class="absolute w-4 h-4 bg-brand-gold rounded-full -left-[9px] md:left-1/2 md:-ml-[8px] top-1 shadow-[0_0_10px_#FFD700]"></div>
+                    <div class="md:w-1/2 md:pr-12 md:ml-0 md:text-right">
+                        <div class="text-brand-gold font-bold text-sm tracking-widest mb-1">MID-GAME</div>
+                        <h3 class="text-2xl font-serif font-bold text-white mb-3">Psionic Ascension & The True Empire</h3>
+                        <div class="bg-brand-panel p-5 rounded-lg border border-gray-800 shadow-md">
+                            <p class="text-gray-300 text-sm leading-relaxed mb-3"><strong>Ascension:</strong> Go Psionic. Primane is a metaphysical force interpreted through the Shroud. Prioritize Psionic Theory and Telepathy.</p>
+                            <p class="text-gray-300 text-sm leading-relaxed mb-3"><strong>Civic Evolution:</strong> After the Under One Rule transition, shift to Imperial authority and reform toward Imperial Cult + Philosopher King.</p>
+                            <p class="text-gray-300 text-sm leading-relaxed text-left md:text-right"><strong>Doctrine:</strong> Hold chokepoints, pounce with concentrated fleets. Secure vassals and relic worlds.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phase 4 -->
+                <div class="relative pl-8 md:pl-0 fade-in">
+                    <div class="absolute w-4 h-4 bg-brand-gold rounded-full -left-[9px] md:left-1/2 md:-ml-[8px] top-1 shadow-[0_0_10px_#FFD700]"></div>
+                    <div class="md:w-1/2 md:pl-12 md:ml-auto">
+                        <div class="text-brand-gold font-bold text-sm tracking-widest mb-1">LATE-GAME</div>
+                        <h3 class="text-2xl font-serif font-bold text-white mb-3">The Solar Custodian</h3>
+                        <div class="bg-brand-panel p-5 rounded-lg border border-gray-800 shadow-md">
+                            <p class="text-gray-300 text-sm leading-relaxed">Establish a holy imperial bloc: loyal client states, massive unity, psionic leaders. If owning Nemesis, become the Galactic Custodian or Emperor. The galaxy respects holy authority more when it arrives with battleships. Maintain fortress chokepoints against the Crisis.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            
+            <!-- Central Line for Desktop -->
+            <div class="hidden md:block absolute w-0.5 bg-brand-gold/30 top-32 bottom-0 left-1/2 -ml-[1px]"></div>
+        </div>
+    </section>
+
+    <section id="variants" class="py-24 bg-[#111218] relative border-t border-brand-panel">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-3xl md:text-5xl font-serif font-bold text-white mb-4">Build Variants</h2>
+                <p class="text-brand-accent max-w-2xl mx-auto">Alternative ways to forge the Dominion depending on your playstyle.</p>
+                <div class="h-1 w-24 bg-brand-gold mx-auto rounded mt-6"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Variant 1 -->
+                <div class="bg-brand-dark rounded-xl border border-red-900/50 p-6 flex flex-col fade-in relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                        <i class="fa-solid fa-skull text-6xl text-red-500"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2 z-10">The Dread Sun Autocracy</h3>
+                    <div class="text-xs text-red-400 uppercase font-bold tracking-wider mb-4 z-10">Meta-Leaning</div>
+                    <p class="text-sm text-gray-400 flex-grow z-10">Uses Fanatic Authoritarian + Spiritualist, Under One Rule, and Oppressive Autocracy + Exalted Priesthood. Turns Enforcers and Telepaths into Elite stratum jobs. Stronger and darker, but less "noble lion pride."</p>
+                </div>
+
+                <!-- Variant 2 -->
+                <div class="bg-brand-dark rounded-xl border border-brand-gold/30 p-6 flex flex-col fade-in relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                        <i class="fa-solid fa-crown text-6xl text-brand-gold"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2 z-10">The Divine Empire of Primane</h3>
+                    <div class="text-xs text-brand-gold uppercase font-bold tracking-wider mb-4 z-10">Roleplay-Leaning</div>
+                    <p class="text-sm text-gray-400 flex-grow z-10">Skip Under One Rule. Start Imperial with Imperial Cult + Philosopher King, using Here Be Dragons or Prosperous Unification. Gives you the divine monarchy immediately instead of waiting for the origin transition.</p>
+                </div>
+
+                <!-- Variant 3 -->
+                <div class="bg-brand-dark rounded-xl border border-blue-900/50 p-6 flex flex-col fade-in relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                        <i class="fa-solid fa-seedling text-6xl text-blue-500"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2 z-10">The United Pride of Atlan</h3>
+                    <div class="text-xs text-blue-400 uppercase font-bold tracking-wider mb-4 z-10">Beginner-Friendly</div>
+                    <p class="text-sm text-gray-400 flex-grow z-10">Uses Prosperous Unification, Fanatic Spiritualist + Authoritarian, Imperial authority, Imperial Cult + Functional Architecture. Straightforward early economic boost for 20 years, easier to learn without story pressure.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-black py-10 border-t border-brand-panel mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center">
+            <div class="flex items-center gap-2 mb-4">
+                <i class="fa-solid fa-satellite-dish text-brand-gold text-xl"></i>
+                <span class="font-serif font-bold text-xl text-white tracking-wider">ThatStellarisGuy</span>
+            </div>
+            <p class="text-gray-500 text-sm max-w-md mx-auto mb-6">
+                May the white-gold blaze of Primane guide your fleets. Safe travels through the hyperlanes.
+            </p>
+            <div class="text-gray-600 text-xs">
+                &copy; 2026 ThatStellarisGuy Builds. Stellaris is a trademark of Paradox Interactive.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu on link click
+        menu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                menu.classList.add('hidden');
+            });
+        });
+
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.15
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target); // Run once
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
